@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "marc21-rdf"
+version = "0.1.0"
+description = ""
+authors = ["Drummerzzz <jf.interatividade@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+Jinja2 = "3.1.2"
+MarkupSafe = "2.1.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

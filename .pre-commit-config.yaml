@@ -1,0 +1,70 @@
+#https://pre-commit.com/hooks.html
+repos:
+
+  # Code Formatter
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+    -   id: trailing-whitespace
+        stages: [commit]
+    -   id: check-ast
+        stages: [commit]
+    -   id: end-of-file-fixer
+        stages: [commit]
+    -   id: check-docstring-first
+        stages: [commit]
+    -   id: check-json
+        stages: [commit]
+    -   id: check-added-large-files
+        stages: [commit]
+    -   id: check-yaml
+        stages: [commit]
+    -   id: debug-statements
+        stages: [commit]
+    -   id: name-tests-test
+        stages: [commit]
+    -   id: double-quote-string-fixer
+        stages: [commit]
+    -   id: requirements-txt-fixer
+        stages: [commit]
+
+  # Formmater
+-   repo: https://github.com/ambv/black
+    rev: 23.3.0
+    hooks:
+    - id: black
+      args: [-S]
+      language_version: python3.10
+      stages: [commit]
+
+-   repo: https://github.com/pycqa/isort
+    rev: 5.12.0
+    hooks:
+      - id: isort
+        args: ["--profile", "black", "--filter-files"]
+        stages: [commit]
+
+  # Lintter
+-   repo: https://github.com/PyCQA/flake8
+    rev: 6.0.0
+    hooks:
+    - id: flake8
+      additional_dependencies: [flake8-docstrings]
+      stages: [commit]
+
+-   repo: https://github.com/myint/autoflake
+    rev: 'v2.0.2'  # Use the sha / tag you want to point at
+    hooks:
+    -   id: autoflake
+        stages: [commit]
+
+  # Tests
+-   repo: local
+    hooks:
+    -   id: pytest
+        name: pytest
+        entry: bash -c 'make test-unit'
+        language: system
+        types: [python]
+        pass_filenames: false
+        stages: [push]

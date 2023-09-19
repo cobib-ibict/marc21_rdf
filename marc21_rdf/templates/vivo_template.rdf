@@ -1,0 +1,46 @@
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:owl="http://www.w3.org/2002/07/owl#"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:foaf="http://xmlns.com/foaf/0.1/"
+  xmlns:dc11="http://purl.org/dc/elements/1.1/"
+  xmlns:vivo="http://vivoweb.org/ontology/core#"
+  xmlns:bibo="http://purl.org/ontology/bibo/"
+  xmlns:vitro="http://vitro.mannlib.cornell.edu/ns/vitro/0.7#"
+  xmlns:dcterms="http://purl.org/dc/terms/"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:obo="http://purl.obolibrary.org/obo/"
+>
+  <rdf:Description rdf:about="{{ content_url }}">
+    <rdf:type rdf:resource="http://purl.obolibrary.org/obo/BFO_0000031" />
+    <rdf:type rdf:resource="http://purl.obolibrary.org/obo/BFO_0000002" />
+    <rdf:type rdf:resource="http://purl.obolibrary.org/obo/IAO_0000030" />
+    <rdf:type rdf:resource="http://purl.org/ontology/bibo/AcademicArticle" />
+    <rdf:type rdf:resource="http://purl.org/ontology/bibo/Article" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Thing" />
+    <rdf:type rdf:resource="http://purl.obolibrary.org/obo/BFO_0000001" />
+    <rdf:type rdf:resource="http://purl.org/ontology/bibo/Document" />
+    <rdf:type rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/0.7#Flag1Value1Thing" />
+    <vivo:Title>{{ title }}</vivo:Title>
+    <vivo:freetextKeyword xml:lang="{{ language }}">{{ title }}</vivo:freetextKeyword>
+    {% for word in title.split(' ') %}
+    <vivo:freetextKeyword xml:lang="{{ language }}">{{word}}</vivo:freetextKeyword>
+    {% endfor %}
+  </rdf:Description>
+  <rdf:Description rdf:about="http://purl.obolibrary.org/obo/BFO_0000031">
+    <vivo:placeOfPublication xml:lang="{{ language }}"> {{ city}} </vivo:placeOfPublication>
+  </rdf:Description>
+
+<rdf:Description rdf:about="http://vivoweb.org/ontology/core#publisher">
+  <rdf:type rdf:resource="http://vivoweb.org/ontology/core#Publisher"/>
+  <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  <rdfs:label xml:lang="{{ language }}">{{ publisher }}</rdfs:label>
+  {% if content_url %}
+    <vivo:publisherOf rdf:resource="{{ content_url }}" />
+      <!--
+        Example
+        <vivo:publisherOf rdf:resource=" http://vivo.mydomain.edu/individual/n5554"/>
+      -->
+  {% endif %}
+</rdf:Description>
+
+</rdf:RDF>

@@ -1,0 +1,36 @@
+[flake8]
+ignore =
+    # Missing docstring in public class
+    D101,
+    # Missing docstring in public module
+    D100,
+    # Missing docstring in public method
+    D102,
+    # Missing docstring in public function
+    D103,
+    # Missing docstring in magic method
+    D105,
+    # Missing docstring in public nested class
+    D106,
+    # One blank line required before class docstring1 blank line required before class docstring
+    D203,
+    # Whitespace before ':'
+    E203,
+    # Line too long
+    E501,
+    # Line break before binary operator
+    W503,
+
+per-file-ignores =
+    */__init__.py: F401
+
+exclude =
+    .git,
+    __pycache__,
+    venv
+    build,
+    dist
+
+
+max-complexity = 18
+select = B,C,E,F,W,T4,B9

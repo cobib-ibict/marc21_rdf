@@ -3,13 +3,15 @@ from typing import Optional
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
+from marc21_rdf.types import Publisher
+
 
 class RDF:
     def __init__(
         self,
         template_name: str = 'vivo_template.rdf',
-        host_name: Optional[str] = 'http://vivo.mydomain.edu/individual',
-        content_id: Optional[str] = 'n5554',
+        host_name: Optional[str] = 'http://example.com/article',
+        content_id: Optional[str] = '5554',
     ) -> None:
         self.host_name = host_name
         self.content_id = content_id
@@ -23,7 +25,7 @@ class RDF:
     def build(
         self,
         subject: str,
-        publishing_company: str,
+        publisher: Publisher,
         city: str,
         issn: str,
         language: str = 'pt-BR',
@@ -33,7 +35,7 @@ class RDF:
             content_url = f'{self.host_name}/{self.content_id}'
         self.__cache = self.__template.render(
             title=subject,
-            publisher=publishing_company,
+            publisher=publisher,
             city=city,
             issn=issn,
             language=language,

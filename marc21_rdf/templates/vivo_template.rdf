@@ -10,41 +10,41 @@
   xmlns:obo="http://purl.obolibrary.org/obo/"
 >
   <!-- Publisher -->
-<rdf:Description rdf:about="{{ publisher.url }}">
+<rdf:Description rdf:about="{{ publication.publisher.url }}">
     <rdf:type rdf:resource="http://vivoweb.org/ontology/core#Publisher" />
-    <rdfs:label xml:lang="{{ language }}">{{ publisher.first_name }} {{ publisher.last_name }}</rdfs:label>
-    <vivo:firstName>{{ publisher.first_name }}</vivo:firstName>
-    <vivo:lastName>{{ publisher.last_name }}</vivo:lastName>
-    <vivo:publisherOf rdf:resource="{{ content_url }}" />
+    <rdfs:label xml:lang="{{ publication.language }}">{{ publication.publisher.first_name }} {{ publication.publisher.last_name }}</rdfs:label>
+    <vivo:firstName>{{ publication.publisher.first_name }}</vivo:firstName>
+    <vivo:lastName>{{ publication.publisher.last_name }}</vivo:lastName>
+    <vivo:publisherOf rdf:resource="{{ publication.url }}" />
   </rdf:Description>
 
   <!-- Article -->
-  <vivo:Article rdf:about="{{ content_url }}">
+  <vivo:Article rdf:about="{{ publication.url }}">
     <rdfs:label
-      xml:lang="{{ language }}">{{ title }}</rdfs:label>
-    <vivo:Title>{{ title }}</vivo:Title>
+      xml:lang="{{ publication.language }}">{{ publication.subject }}</rdfs:label>
+    <vivo:Title>{{ publication.subject }}</vivo:Title>
     <bibo:publishedOn rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2023-09-26</bibo:publishedOn>
     <vivo:freetextKeyword
-      xml:lang="{{ language }}">{{ title }}
-    </vivo:freetextKeyword> {% for word in title.split(' ') %} <vivo:freetextKeyword xml:lang="{{ language }}">{{word}}</vivo:freetextKeyword> {% endfor %}
+      xml:lang="{{ publication.language }}">{{ publication.subject }}
+    </vivo:freetextKeyword> {% for word in publication.subject.split(' ') %} <vivo:freetextKeyword xml:lang="{{ publication.language }}">{{word}}</vivo:freetextKeyword> {% endfor %}
   </vivo:Article>
 
   <!-- Article -->
-  <bibo:Article rdf:about="{{ content_url }}">
+  <bibo:Article rdf:about="{{ publication.url }}">
     <bibo:authorList rdf:parseType="Resource">
-      <bibo:author rdf:resource="{{ publisher.url }}" />
+      <bibo:author rdf:resource="{{ publication.publisher.url }}" />
     </bibo:authorList>
-    <bibo:title>{{ title }}</bibo:title>
+    <bibo:title>{{ publication.subject }}</bibo:title>
     <bibo:publishedOn rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2023-09-26</bibo:publishedOn>
   </bibo:Article>
   <!-- City -->
-  <rdf:Description rdf:about="{{ content_url }}">
+  <rdf:Description rdf:about="{{ publication.url }}">
     <rdf:type rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/public#Location" />
-    <vitro:locationName>{{ city }}</vitro:locationName>
-    <vivo:placeOfPublication xml:lang="{{ language }}"> {{ city}} </vivo:placeOfPublication>
+    <vitro:locationName>{{ publication.city }}</vitro:locationName>
+    <vivo:placeOfPublication xml:lang="{{ publication.language }}"> {{ publication.city}} </vivo:placeOfPublication>
   </rdf:Description>
-  <vivo:Authorship rdf:about="http://exemplo.com/autoria1">
-    <vivo:relates rdf:resource="{{ publisher.url }}"/>
-    <vivo:relates rdf:resource="{{ content_url }}"/>
+  <vivo:Authorship rdf:about="{{ publication.author_ship }}">
+    <vivo:relates rdf:resource="{{ publication.publisher.url }}"/>
+    <vivo:relates rdf:resource="{{ publication.url }}"/>
   </vivo:Authorship>
 </rdf:RDF>

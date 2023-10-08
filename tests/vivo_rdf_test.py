@@ -4,6 +4,7 @@ import pytest
 from faker import Faker
 
 from marc21_rdf import RDF
+from marc21_rdf.types import Publisher
 
 fake = Faker()
 
@@ -28,9 +29,13 @@ def test_rdf_write(rdf: RDF):
     try:
         rdf.build(
             fake.paragraph(nb_sentences=1),
-            fake.name(),
+            Publisher(
+                url=f'http://pinakes.ccn.com/person/{randint(100, 999)}',
+                first_name=fake.name().split(' ')[0],
+                last_name=fake.name().split(' ')[1],
+            ),
             fake.city(),
-            f'{fake.random}',
+            randint(100, 999),
             'pt-BR',
         )
         rdf.write('tests/test')

@@ -44,7 +44,7 @@ article = Article(
         url='http://pinakes.ccn.com/article/178',
         publisher=Publisher(
             id=320,
-            url='http://pinakes.ccn.com/2',
+            url='http://pinakes.ccn.com/320',
             first_name='Kimberly',
             last_name='Burns',
         ),

@@ -3,7 +3,7 @@ from typing import Optional
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
-from marc21_rdf.types import Publication
+from marc21_rdf.types import Article
 
 
 class RDF:
@@ -17,8 +17,8 @@ class RDF:
         self.__template = self.__env.get_template(template_name)
         self.__cache: Optional[str] = None
 
-    def build(self, publication: Publication, *args, **kwargs) -> str:
-        self.__cache = self.__template.render(publication=publication)
+    def build(self, article: Article, *args, **kwargs) -> str:
+        self.__cache = self.__template.render(article=article)
         return self.__cache
 
     def write(self, file_name: str, extension: Optional[str] = 'rdf') -> None:

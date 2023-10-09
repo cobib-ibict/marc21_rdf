@@ -10,41 +10,51 @@
   xmlns:obo="http://purl.obolibrary.org/obo/"
 >
   <!-- Publisher -->
-<rdf:Description rdf:about="{{ publication.publisher.url }}">
+<rdf:Description rdf:about="{{ article.publisher.url }}">
     <rdf:type rdf:resource="http://vivoweb.org/ontology/core#Publisher" />
-    <rdfs:label xml:lang="{{ publication.language }}">{{ publication.publisher.first_name }} {{ publication.publisher.last_name }}</rdfs:label>
-    <vivo:firstName>{{ publication.publisher.first_name }}</vivo:firstName>
-    <vivo:lastName>{{ publication.publisher.last_name }}</vivo:lastName>
-    <vivo:publisherOf rdf:resource="{{ publication.url }}" />
+    <rdfs:label xml:lang="{{ article.language }}">{{ article.publisher.first_name }} {{ article.publisher.last_name }}</rdfs:label>
+    <vivo:firstName>{{ article.publisher.first_name }}</vivo:firstName>
+    <vivo:lastName>{{ article.publisher.last_name }}</vivo:lastName>
+    <vivo:publisherOf rdf:resource="{{ article.url }}" />
   </rdf:Description>
 
   <!-- Article -->
-  <vivo:Article rdf:about="{{ publication.url }}">
+  <vivo:Article rdf:about="{{ article.url }}">
     <rdfs:label
-      xml:lang="{{ publication.language }}">{{ publication.subject }}</rdfs:label>
-    <vivo:Title>{{ publication.subject }}</vivo:Title>
-    <bibo:publishedOn rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2023-09-26</bibo:publishedOn>
+      xml:lang="{{ article.language }}">{{ article.subject }}</rdfs:label>
+    <vivo:Title>{{ article.subject }}</vivo:Title>
     <vivo:freetextKeyword
-      xml:lang="{{ publication.language }}">{{ publication.subject }}
-    </vivo:freetextKeyword> {% for word in publication.subject.split(' ') %} <vivo:freetextKeyword xml:lang="{{ publication.language }}">{{word}}</vivo:freetextKeyword> {% endfor %}
+    xml:lang="{{ article.language }}">{{ article.subject }}
+    </vivo:freetextKeyword> {% for word in article.subject.split(' ') %} <vivo:freetextKeyword xml:lang="{{ article.language }}">{{word}}</vivo:freetextKeyword> {% endfor %}
+    {% if article.published_at %}
+      <vivo:dateTime>{{ article.published_at.isoformat()[:-7] }}</vivo:dateTime>
+      <vivo:dateTimeValue>{{ article.published_at.isoformat()[:-7] }}</vivo:dateTimeValue>
+    {% endif %}
   </vivo:Article>
 
   <!-- Article -->
-  <bibo:Article rdf:about="{{ publication.url }}">
+  <bibo:Article rdf:about="{{ article.url }}">
     <bibo:authorList rdf:parseType="Resource">
-      <bibo:author rdf:resource="{{ publication.publisher.url }}" />
+      <bibo:author rdf:resource="{{ article.publisher.url }}" />
     </bibo:authorList>
-    <bibo:title>{{ publication.subject }}</bibo:title>
-    <bibo:publishedOn rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2023-09-26</bibo:publishedOn>
+    <bibo:title>{{ article.subject }}</bibo:title>
+    <!-- <bibo:publishedOn rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2023-09-26</bibo:publishedOn> -->
+    {% if article.abstract %}
+    <bibo:abstract xml:lang="{{ article.language }}">{{ article.abstract }}</bibo:abstract>
+    {% endif %}
+    {% if article.published_at %}
+      <vivo:dateTime>{{ article.published_at.isoformat()[:-7] }}</vivo:dateTime>
+      <vivo:dateTimeValue>{{ article.published_at.isoformat()[:-7] }}</vivo:dateTimeValue>
+    {% endif %}
   </bibo:Article>
   <!-- City -->
-  <rdf:Description rdf:about="{{ publication.url }}">
+  <rdf:Description rdf:about="{{ article.url }}">
     <rdf:type rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/public#Location" />
-    <vitro:locationName>{{ publication.city }}</vitro:locationName>
-    <vivo:placeOfPublication xml:lang="{{ publication.language }}"> {{ publication.city}} </vivo:placeOfPublication>
+    <vitro:locationName>{{ article.city }}</vitro:locationName>
+    <vivo:placeOfPublication xml:lang="{{ article.language }}"> {{ article.city}} </vivo:placeOfPublication>
   </rdf:Description>
-  <vivo:Authorship rdf:about="{{ publication.author_ship }}">
-    <vivo:relates rdf:resource="{{ publication.publisher.url }}"/>
-    <vivo:relates rdf:resource="{{ publication.url }}"/>
+  <vivo:Authorship rdf:about="{{ article.author_ship }}">
+    <vivo:relates rdf:resource="{{ article.publisher.url }}"/>
+    <vivo:relates rdf:resource="{{ article.url }}"/>
   </vivo:Authorship>
 </rdf:RDF>

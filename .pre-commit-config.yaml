@@ -63,7 +63,7 @@ repos:
     hooks:
     -   id: pytest
         name: pytest
-        entry: bash -c 'make test-unit'
+        entry: bash -c 'make test'
         language: system
         types: [python]
         pass_filenames: false

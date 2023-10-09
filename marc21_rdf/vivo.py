@@ -23,7 +23,7 @@ class RDF:
 
     def write(self, file_name: str, extension: Optional[str] = 'rdf') -> None:
         if not self.__cache:
-            raise ValueError('Build method is required before Write')
+            raise ValueError('The build method must be executed before writing.')
         with open(f'{file_name}.{extension}', 'w') as file:
             file.write(self.__cache)
             self.__cache = None

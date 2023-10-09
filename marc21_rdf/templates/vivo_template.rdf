@@ -38,7 +38,6 @@
       <bibo:author rdf:resource="{{ article.publisher.url }}" />
     </bibo:authorList>
     <bibo:title>{{ article.subject }}</bibo:title>
-    <!-- <bibo:publishedOn rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2023-09-26</bibo:publishedOn> -->
     {% if article.abstract %}
     <bibo:abstract xml:lang="{{ article.language }}">{{ article.abstract }}</bibo:abstract>
     {% endif %}

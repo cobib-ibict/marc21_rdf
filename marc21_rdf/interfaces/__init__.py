@@ -1,0 +1,1 @@
+from ._publication_interface import PublicationInterface

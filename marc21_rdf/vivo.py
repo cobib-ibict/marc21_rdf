@@ -3,22 +3,20 @@ from typing import Optional
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
-from marc21_rdf.types import Article
+from marc21_rdf.interfaces import PublicationInterface
 
 
 class RDF:
-    def __init__(
-        self, template_name: str = 'vivo_template.rdf', *args, **kwargs
-    ) -> None:
+    def __init__(self, *args, **kwargs) -> None:
         self.__env = Environment(
             loader=FileSystemLoader('%s/templates/' % os.path.dirname(__file__)),
             autoescape=select_autoescape(),
         )
-        self.__template = self.__env.get_template(template_name)
         self.__cache: Optional[str] = None
 
-    def build(self, article: Article, *args, **kwargs) -> str:
-        self.__cache = self.__template.render(article=article)
+    def build(self, obj: PublicationInterface, *args, **kwargs) -> str:
+        self.__template = self.__env.get_template(obj.template_name)
+        self.__cache = self.__template.render(obj=obj)
         return self.__cache
 
     def write(self, file_name: str, extension: Optional[str] = 'rdf') -> None:

@@ -2,27 +2,20 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import Optional
 
-
-@dataclass
-class Publisher:
-    id: str
-    url: str
-    first_name: str
-    last_name: str
+from marc21_rdf.interfaces import PublicationInterface
+from marc21_rdf.types.authors import Author
+from marc21_rdf.types.publishers import Publisher
 
 
 @dataclass
-class Article:
+class Article(PublicationInterface):
     id: str
     url: str
     subject: str
+    author: Author
     publisher: Publisher
     city: str
     issn: str
     language: str = 'pt-BR'
     abstract: Optional[str] = None
     published_at: Optional[datetime] = None
-
-    @property
-    def author_ship(self) -> str:
-        return f'/publishers/{self.publisher.id}/articles/{self.id}'

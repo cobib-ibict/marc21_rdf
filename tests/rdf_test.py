@@ -4,7 +4,7 @@ import pytest
 
 from marc21_rdf import RDF
 from marc21_rdf.interfaces import PublicationInterface
-from tests.utils import get_module_class_names
+from marc21_rdf.utils import get_module_class_names
 
 instances_types = get_module_class_names('marc21_rdf.types.publications')
 

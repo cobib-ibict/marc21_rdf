@@ -1,0 +1,99 @@
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:owl="http://www.w3.org/2002/07/owl#"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:foaf="http://xmlns.com/foaf/0.1/"
+  xmlns:vivo="http://vivoweb.org/ontology/core#"
+  xmlns:bibo="http://purl.org/ontology/bibo/"
+  xmlns:vitro="http://vitro.mannlib.cornell.edu/ns/vitro/0.7#"
+  xmlns:dcterms="http://purl.org/dc/terms/"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:vcard="http://www.w3.org/2006/vcard/ns#"
+  xmlns:obo="http://purl.obolibrary.org/obo/"
+>
+
+<rdf:Description rdf:about="{{obj.author.url}}">
+    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
+    <rdfs:label xml:lang="{{ obj.language }}">{{ obj.author.full_name }}</rdfs:label>
+    <vivo:relates rdf:resource="{{ obj.url }}"/>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="{{obj.editor.url}}">
+    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
+    <rdfs:label xml:lang="{{ obj.language }}">{{ obj.editor.full_name }}</rdfs:label>
+    <vivo:editorOf rdf:resource="{{ obj.url }}"/>
+    <vivo:relates rdf:resource="{{ obj.url }}"/>
+  </rdf:Description>
+
+  <vivo:Book rdf:about="{{ obj.url }}">
+    <rdfs:label xml:lang="{{ obj.language }}">{{ obj.subject }}</rdfs:label>
+    {% for word in obj.subject.split(' ') %} <vivo:freetextKeyword xml:lang="{{ obj.language }}">{{word}}</vivo:freetextKeyword>{{ '\n\t\t'|safe }}{% endfor %}
+    <vivo:dateTimeValue>
+       <obo:BFO_0000003 rdf:about="{{ obj.url}}">
+         <rdf:type rdf:resource="http://purl.obolibrary.org/obo/BFO_0000008"/>
+         <rdf:type rdf:resource="http://purl.obolibrary.org/obo/BFO_0000001"/>
+         <rdf:type rdf:resource="http://vivoweb.org/ontology/core#DateTimeValue"/>
+         <rdf:type rdf:resource="http://purl.obolibrary.org/obo/BFO_0000148"/>
+         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+         <vivo:dateTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">{{ obj.published_at.isoformat()[:-7] }}</vivo:dateTime>
+       </obo:BFO_0000003>
+     </vivo:dateTimeValue>
+  </vivo:Book>
+
+    <vivo:publisher rdf:about="{{ obj.publisher.url }}">
+      <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Agent"/>
+      <rdf:type rdf:resource="http://purl.obolibrary.org/obo/BFO_0000001"/>
+      <rdf:type rdf:resource="http://purl.obolibrary.org/obo/BFO_0000004"/>
+      <rdf:type rdf:resource="http://purl.obolibrary.org/obo/BFO_0000002"/>
+      <rdf:type rdf:resource="http://vivoweb.org/ontology/core#Publisher"/>
+      <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+      <rdfs:label xml:lang="en-US">{{ obj.publisher.full_name }}</rdfs:label>
+      <vivo:publisherOf rdf:resource="{{ obj.url }}"/>
+    </vivo:publisher>
+
+
+  <bibo:Book rdf:about="{{ obj.url }}">
+    <bibo:uri xml:lang="{{ obj.language }}">{{ obj.url }}</bibo:uri>
+    <bibo:issn xml:lang="{{ obj.language }}">{{ obj.issn }}</bibo:issn>
+    {% if obj.volume %}
+    <bibo:volume xml:lang="{{ obj.language }}">{{ obj.volume }}</bibo:volume>
+    {% endif %}
+    {% if obj.number %}
+    <bibo:number xml:lang="{{ obj.language }}">{{ obj.number }}</bibo:number>
+    {% endif %}
+    {% if obj.num_pages %}
+    <bibo:numPages xml:lang="{{ obj.language }}">{{ obj.num_pages }}</bibo:numPages>
+    {% endif %}
+    {% if obj.edition %}
+    <bibo:edition xml:lang="{{ obj.language }}">{{ obj.edition }}</bibo:edition>
+    {% endif %}
+    {% if obj.abstract %}
+    <bibo:abstract xml:lang="{{ obj.language }}">{{ obj.abstract }}</bibo:abstract>
+    {% endif %}
+    {% if obj.doi %}
+    <bibo:doi xml:lang="{{ obj.language }}">{{ obj.doi }}</bibo:doi>
+    {% endif %}
+
+    {% if obj.isbn %}
+      {% if obj.isbn|length > 10 %}
+      <bibo:isbn10 xml:lang="{{ obj.language }}">{{ obj.isbn }}</bibo:isbn10>
+      {% else %}
+      <bibo:isbn13 xml:lang="{{ obj.language }}">{{ obj.isbn }}</bibo:isbn13>
+     {% endif %}
+    {% endif %}
+
+  </bibo:Book>
+
+  <rdf:Description rdf:about="{{ obj.url }}">
+    <rdf:type rdf:resource="http://vitro.mannlib.cornell.edu/ns/vitro/public#Location" />
+    <vitro:locationName>{{ obj.city }}</vitro:locationName>
+    <vivo:placeOfPublication xml:lang="{{ obj.language }}">{{ obj.city }}</vivo:placeOfPublication>
+  </rdf:Description>
+  <vivo:Authorship rdf:about="{{ obj.url }}">
+    <vivo:relates rdf:resource="{{obj.author.url}}"/>
+    <vivo:relates rdf:resource="{{ obj.url }}"/>
+  </vivo:Authorship>
+  <vivo:Editorship rdf:about="{{ obj.editor.url }}">
+    <vivo:relates rdf:resource="{{obj.editor.url}}"/>
+    <vivo:relates rdf:resource="{{ obj.url }}"/>
+  </vivo:Editorship>
+</rdf:RDF>
